@@ -16,6 +16,9 @@ public class WebElements {
         passwordField.sendKeys("secret_sauce");
         WebElement loginButton=driver.findElement(By.id("login-button"));
         loginButton.click();
+        WebElement swagLogo=driver.findElement(By.className("app_logo"));
+        String swagLogoTxt = swagLogo.getText();
+        System.out.println(swagLogoTxt);
 
         driver.close();
     }
