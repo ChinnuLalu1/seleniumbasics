@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class Commands extends Base {
     @Test
     public void verifySwagLabsUserName() {
@@ -114,6 +116,50 @@ public class Commands extends Base {
         String actualEmail = actualEmailElement.getText();
         String expectedEmail = "chinnu.obsqura@gmail.com";
         Assert.assertEquals(actualEmail, expectedEmail, "Invalid Email");
+
+    }
+    @Test
+    public void validateTotalNumberOfTagsInTheApplecation(){
+        driver.get("https://demowebshop.tricentis.com/");
+        List<WebElement> inputNames=driver.findElements(By.tagName("input"));
+        int inputSize=inputNames.size();
+        System.out.println("Total Number of Input Tags is : "+inputSize);
+
+    }
+    @Test
+    public void vrifyNavigationommands() {
+        driver.get("https://demowebshop.tricentis.com/");
+        WebElement register = driver.findElement(By.xpath("//a[@class='ico-register']"));
+        register.click();
+        driver.navigate().back();
+        driver.navigate().forward();
+        WebElement firstName = driver.findElement(By.xpath("//input[@id='FirstName']"));
+        firstName.sendKeys("chinnu");
+        WebElement lastName = driver.findElement(By.xpath("//input[@id='LastName']"));
+        lastName.sendKeys("Lalu");
+        WebElement emailId = driver.findElement(By.xpath("//input[@id='Email']"));
+        emailId.sendKeys("cchinnu.obsqura@gmail.com");
+        driver.navigate().refresh();
+        driver.navigate().to("http://google.com");
+    }
+
+    @Test
+    public void verifyIsSelected(){
+        boolean isMaleSelected;
+        driver.get("https://demowebshop.tricentis.com/register");
+        WebElement radioButtonMale=driver.findElement(By.xpath("//input[@id='gender-male']"));
+        isMaleSelected =radioButtonMale.isSelected();
+        Assert.assertFalse(isMaleSelected,"The radio button is selected");
+        System.out.println("Male Element Before Selected "+isMaleSelected);
+        radioButtonMale.click();
+        isMaleSelected=radioButtonMale.isSelected();
+        Assert.assertTrue(isMaleSelected,"radio button is not selected");
+        System.out.println("Male Element After Selected "+isMaleSelected);
+
+    }
+    public void verifyIsEnabled(){
+        driver.get("https://demowebshop.tricentis.com/");
+        WebElement subscibeButton=driver.findElement(By.xpath("//input[@id='newsletter-subscribe-button']"));
 
     }
 }
