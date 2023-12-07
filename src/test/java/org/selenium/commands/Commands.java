@@ -171,14 +171,11 @@ public class Commands extends Base {
         WebElement voteButton=driver.findElement(By.xpath("//input[@id='vote-poll-1']"));
         boolean isVoteButtonDisplayed=voteButton.isDisplayed();
         Assert.assertTrue(isVoteButtonDisplayed,"Vote button is not displayed");
-
-        //List<WebElement> communityPoll = driver.findElements(By.xpath("//label[starts-with(@for,'p')]//parent::li"));
-
     }
     @Test
     public void verifyCommunityPoll(){
         driver.get("https://demowebshop.tricentis.com/");
-        List<WebElement> communityPollElements = driver.findElements(By.xpath("//ul[@class='poll-options']/li/label"));
+        List<WebElement> communityPollElements = driver.findElements(By.xpath("//label[starts-with(@for,'pol')]//parent::li"));
         for(int i=0;i<communityPollElements.size();i++){
             //System.out.println(communityPollElements.get(i).getText());
             String pollElementText=communityPollElements.get(i).getText();
