@@ -1,5 +1,6 @@
 package org.selenium.commands;
 
+import io.opentelemetry.exporter.logging.SystemOutLogRecordExporter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -157,9 +158,34 @@ public class Commands extends Base {
         System.out.println("Male Element After Selected "+isMaleSelected);
 
     }
+    @Test
     public void verifyIsEnabled(){
         driver.get("https://demowebshop.tricentis.com/");
         WebElement subscibeButton=driver.findElement(By.xpath("//input[@id='newsletter-subscribe-button']"));
+        boolean isSubscribeButtonIsEnabled=subscibeButton.isEnabled();
+        Assert.assertTrue(isSubscribeButtonIsEnabled,"Subscribe button is not enabled");
+    }
+    @Test
+    public void verifyIsDisplayed(){
+        driver.get("https://demowebshop.tricentis.com/");
+        WebElement voteButton=driver.findElement(By.xpath("//input[@id='vote-poll-1']"));
+        boolean isVoteButtonDisplayed=voteButton.isDisplayed();
+        Assert.assertTrue(isVoteButtonDisplayed,"Vote button is not displayed");
+
+        //List<WebElement> communityPoll = driver.findElements(By.xpath("//label[starts-with(@for,'p')]//parent::li"));
 
     }
+    @Test
+    public void verifyCommunityPoll(){
+        driver.get("https://demowebshop.tricentis.com/");
+        List<WebElement> communityPollElements = driver.findElements(By.xpath("//ul[@class='poll-options']/li/label"));
+        for(int i=0;i<communityPollElements.size();i++){
+            //System.out.println(communityPollElements.get(i).getText());
+            String pollElementText=communityPollElements.get(i).getText();
+            if(pollElementText.equals("Poor")){
+                communityPollElements.get(i).click();
+            }
+        }
+    }
+
 }
