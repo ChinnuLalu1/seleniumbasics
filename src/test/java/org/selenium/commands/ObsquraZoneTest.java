@@ -2,8 +2,12 @@ package org.selenium.commands;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ObsquraZoneTest extends Base{
 @Test
@@ -81,5 +85,46 @@ public class ObsquraZoneTest extends Base{
         String expectedResultText="Form has been submitted successfully!";
         Assert.assertEquals(actualResult,expectedResultText,"Form submission unsuccessful");
 
+    }
+    @Test
+    public void verifyColorSelectFromDropDown(){
+        driver.get("https://selenium.obsqurazone.com/select-input.php");
+        WebElement colorDropDown= driver.findElement(By.xpath("//select[@id='single-input-field']"));
+        Select select=new Select(colorDropDown);
+        select.selectByIndex(2);
+        WebElement selectedColorElement=driver.findElement(By.xpath("//div[@id='message-one']"));
+        String actualResult=selectedColorElement.getText();
+        String expectedResult="Selected Color : Yellow";
+        Assert.assertEquals(actualResult,expectedResult,"No color selected");
+
+    }
+    @Test
+    public void verifyTotalNumberOfDropDown(){
+        driver.get("https://selenium.obsqurazone.com/select-input.php");
+        WebElement colorDropDown= driver.findElement(By.xpath("//select[@id='single-input-field']"));
+        Select select=new Select(colorDropDown);
+        List<WebElement>colorCount=select.getOptions();
+        int actualCount=colorCount.size();
+        int expectedCound=4;
+        Assert.assertEquals(actualCount,expectedCound,"Invalid size");
+
+    }
+    @Test
+    public void veryfyValuesInColorSelectDropDown(){
+        driver.get("https://selenium.obsqurazone.com/select-input.php");
+        WebElement colorDropDown= driver.findElement(By.xpath("//select[@id='single-input-field']"));
+        Select select=new Select(colorDropDown);
+        List<WebElement>colorOptions=select.getOptions();
+        List<String>actualOptions=new ArrayList<>();
+        for(WebElement w:colorOptions){
+            String colors= w.getText();
+            actualOptions.add(colors);
+        }
+        List<String> expectedOption=new ArrayList<>();
+        expectedOption.add("-- Select --");
+        expectedOption.add("Red");
+        expectedOption.add("Yellow");
+        expectedOption.add("Green");
+        Assert.assertEquals(actualOptions,expectedOption,"No selection available");
     }
 }

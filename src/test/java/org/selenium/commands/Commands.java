@@ -3,6 +3,7 @@ package org.selenium.commands;
 import io.opentelemetry.exporter.logging.SystemOutLogRecordExporter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -183,6 +184,27 @@ public class Commands extends Base {
                 communityPollElements.get(i).click();
             }
         }
+    }
+    @Test
+    public void verifyValuesFromeDropDown(){
+        driver.get("https://demo.guru99.com/test/newtours/register.php");
+        WebElement countryDropDown=driver.findElement(By.xpath("//select[@name='country']"));
+        Select select=new Select(countryDropDown);
+        //select.selectByVisibleText("INDIA");
+        //select.selectByIndex(23);
+        select.selectByValue("AMERICAN SAMOA");
+        WebElement getCountryName=select.getFirstSelectedOption();
+        System.out.println(getCountryName.getText());
+
+    }
+    @Test
+    public void verifyTotalNumbrOfDropDownValues(){
+        driver.get("https://demo.guru99.com/test/newtours/register.php");
+        WebElement countryDropDown=driver.findElement(By.xpath("//select[@name='country']"));
+        Select select=new Select(countryDropDown);
+        List<WebElement>dropdownElementsList=select.getOptions();
+        System.out.println(dropdownElementsList.size());
+
     }
 
 }
