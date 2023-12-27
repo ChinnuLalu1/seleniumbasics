@@ -23,9 +23,17 @@ public static XSSFSheet sh;
         Cell cell= row.getCell(j);
         return cell.getStringCellValue();
     }*/
-    public static ArrayList<String>readData(String file_path,String sheet) throws IOException {
-        file=new FileInputStream(file_path);
-        wb=new XSSFWorkbook(file);
+    public static ArrayList<String>readData(String file_path,String sheet) {
+        try {
+            file=new FileInputStream(file_path);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            wb=new XSSFWorkbook(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         sh= wb.getSheet(sheet);
         ArrayList<String>excelRows=new ArrayList<>();
         int rowCount=sh.getLastRowNum()- sh.getFirstRowNum();
@@ -39,9 +47,9 @@ public static XSSFSheet sh;
         return excelRows;
     }
 
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args){
         //System.out.println(ExcelUtility.readStringData(1,0,"Login_Data"));
         System.out.println(ExcelUtility.readData("C:\\Users\\Chinnu Lalu\\IdeaProjects\\seleniumbasics\\src\\main\\resources\\TestData.xlsx","Login_Data"));
 
-    }
+    }*/
 }
