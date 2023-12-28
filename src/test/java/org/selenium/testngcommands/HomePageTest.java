@@ -14,24 +14,26 @@ import java.util.List;
 
 public class HomePageTest extends Base {
     @Test
-    public void verifyHomePageTitle(){
-        String actualTitle= driver.getTitle();
-        ArrayList<String> data= ExcelUtility.readData(Constans.TEST_DATA_EXCEL_PATH,Constans.HOME_PAGE);
-        String expectedTitle=data.get(1);
-        Assert.assertEquals(actualTitle,expectedTitle, Messages.TITLE_MISMATCH);
+    public void verifyHomePageTitle() {
+        String actualTitle = driver.getTitle();
+        ArrayList<String> data = ExcelUtility.readData(Constans.TEST_DATA_EXCEL_PATH, Constans.HOME_PAGE);
+        String expectedTitle = data.get(1);
+        Assert.assertEquals(actualTitle, expectedTitle, Messages.TITLE_MISMATCH);
     }
+
     @Test
-    public void verifyCommunityPollSelection(){
-        List<WebElement>communityPollElements=driver.findElements(By.xpath("//li[@class='answer']//label"));
-        for(int i=0;i<communityPollElements.size();i++){
-            String communityPollElementText=communityPollElements.get(i).getText();
-            ArrayList<String>data=ExcelUtility.readData(Constans.TEST_DATA_EXCEL_PATH,Constans.HOME_PAGE);
-            if(communityPollElementText.equals(data.get(2))){
+    public void verifyCommunityPollSelection() {
+        List<WebElement> communityPollElements = driver.findElements(By.xpath("//li[@class='answer']//label"));
+        for (int i = 0; i < communityPollElements.size(); i++) {
+            String communityPollElementText = communityPollElements.get(i).getText();
+            ArrayList<String> data = ExcelUtility.readData(Constans.TEST_DATA_EXCEL_PATH, Constans.HOME_PAGE);
+            if (communityPollElementText.equals(data.get(2))) {
                 communityPollElements.get(i).click();
             }
         }
-        WebElement pollElement= driver.findElement(By.xpath("//input[@id='pollanswers-3']"));
-        boolean isPollElementSelected=pollElement.isSelected();
-        Assert.assertTrue(isPollElementSelected,Messages.CHECKBOX_SELECTION_FAILED);
+        WebElement pollElement = driver.findElement(By.xpath("//input[@id='pollanswers-3']"));
+        boolean isPollElementSelected = pollElement.isSelected();
+        Assert.assertTrue(isPollElementSelected, Messages.CHECKBOX_SELECTION_FAILED);
     }
+
 }

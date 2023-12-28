@@ -14,25 +14,44 @@ import java.util.ArrayList;
 
 public class LoginPageTest extends Base {
     @Test
-    public void verifyLoginPageTitle(){
-        String actualLoginPageTitle= driver.getTitle();
-        ArrayList<String>data= ExcelUtility.readData(Constans.TEST_DATA_EXCEL_PATH,Constans.LOGIN_PAGE);
-        String expectedLoginPageTitle= data.get(0);
-        Assert.assertEquals(actualLoginPageTitle,expectedLoginPageTitle,Messages.TITLE_MISMATCH);
+    public void verifyLoginPageTitle() {
+        WebElement loginField = driver.findElement(By.xpath("//a[@class='ico-login']"));
+        loginField.click();
+        String actualLoginPageTitle = driver.getTitle();
+        ArrayList<String> data = ExcelUtility.readData(Constans.TEST_DATA_EXCEL_PATH, Constans.LOGIN_PAGE);
+        String expectedLoginPageTitle = data.get(0);
+        Assert.assertEquals(actualLoginPageTitle, expectedLoginPageTitle, Messages.TITLE_MISMATCH);
+    }
+
+    @Test
+    public void verifyUserLogin() {
+        String firstName = RandomDataUtility.getFirstName();
+        String lastName = RandomDataUtility.getLastName();
+        String emailId = firstName + "." + lastName;
+        String password = firstName + "." + lastName;
+        WebElement loginField = driver.findElement(By.xpath("//a[@class='ico-login']"));
+        loginField.click();
+        WebElement email = driver.findElement(By.xpath("//input[@id='Email']"));
+        email.sendKeys(emailId);
+        WebElement passwordData = driver.findElement(By.xpath("//input[@id='Password']"));
+        passwordData.sendKeys(password);
+        WebElement loginButton = driver.findElement(By.xpath("//input[@class='button-1 login-button']"));
+        loginButton.click();
     }
     @Test
-    public void verifyUserLogin(){
-        String firstName=RandomDataUtility.getFirstName();
-        String lastName=RandomDataUtility.getLastName();
-        String emailId=firstName+"."+lastName;
-        String password=firstName+"."+lastName;
-        WebElement loginField= driver.findElement(By.xpath("//a[@class='ico-login']"));
+    public void verifyUserLoginWithInvalidCredentials(){
+        WebElement loginField = driver.findElement(By.xpath("//a[@class='ico-login']"));
         loginField.click();
-        WebElement email= driver.findElement(By.xpath("//input[@id='Email']"));
-        email.sendKeys(emailId);
-        WebElement passwordData= driver.findElement(By.xpath("//input[@id='Password']"));
-        passwordData.sendKeys(password);
-        WebElement loginButton=driver.findElement(By.xpath("//input[@class='button-1 login-button']"));
+        WebElement emailField = driver.findElement(By.xpath("//input[@id='Email']"));
+        ArrayList<String> data = ExcelUtility.readData(Constans.TEST_DATA_EXCEL_PATH, Constans.LOGIN_PAGE);
+        emailField.sendKeys(data.get(1));
+        WebElement passwordField = driver.findElement(By.xpath("//input[@id='Password']"));
+        passwordField.sendKeys(data.get(2));
+        WebElement loginButton = driver.findElement(By.xpath("//input[@class='button-1 login-button']"));
         loginButton.click();
+        WebElement actualMsgElement = driver.findElement(By.xpath("//span[text()='Login was unsuccessful. Please correct the errors and try again.']"));
+        String actualMsgText = actualMsgElement.getText();
+        String expectedMsgText = data.get(3);
+        Assert.assertEquals(actualMsgText,expectedMsgText,Messages.LOGIN_FAILED);
     }
 }
