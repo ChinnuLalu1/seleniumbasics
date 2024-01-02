@@ -5,5 +5,6 @@ public class Messages {
     public static final String USER_REGISTRATION_FAILED = "User registration failed";
     public static final String CHECKBOX_SELECTION_FAILED = "CheckBox not selected";
     public static final String LOGIN_FAILED = "Login was unsuccessful";
+    public static final String LOGIN_FAILED_WARNING_MSG_NOT_FOUND = "Login FAILED WARNING MESSAGE NOT FOUND";
 
 }
